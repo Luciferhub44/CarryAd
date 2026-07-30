@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { RefObject } from 'react'
 
 /** ponytail: one IntersectionObserver per element, fine at this page's scale (~5 sections) */
-export default function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null)
+export default function useReveal(ref: RefObject<HTMLElement | null>): boolean {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function useReveal<T extends HTMLElement>() {
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [ref])
 
-  return { ref, className: `reveal${visible ? ' in' : ''}` }
+  return visible
 }

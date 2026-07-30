@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import Header from '../components/Header'
 import InkLink from '../components/InkLink'
@@ -149,10 +149,14 @@ export default function Home() {
     return () => cancelAnimationFrame(raf)
   }, [])
 
-  const servicesReveal = useReveal<HTMLDivElement>()
-  const estimatorReveal = useReveal<HTMLDivElement>()
-  const workReveal = useReveal<HTMLDivElement>()
-  const bookingReveal = useReveal<HTMLDivElement>()
+  const servicesRef = useRef<HTMLDivElement>(null)
+  const servicesVisible = useReveal(servicesRef)
+  const estimatorRef = useRef<HTMLDivElement>(null)
+  const estimatorVisible = useReveal(estimatorRef)
+  const workRef = useRef<HTMLDivElement>(null)
+  const workVisible = useReveal(workRef)
+  const bookingRef = useRef<HTMLDivElement>(null)
+  const bookingVisible = useReveal(bookingRef)
 
   // ---- estimator ----
   const [website, setWebsite] = useState(false)
@@ -292,7 +296,7 @@ export default function Home() {
           <p className="eyebrow">Core services</p>
           <h2>Everything a corner shop needs, carried as one story. Not four vendors.</h2>
         </div>
-        <div ref={servicesReveal.ref} className={`services-grid ${servicesReveal.className}`}>
+        <div ref={servicesRef} className={`services-grid reveal${servicesVisible ? ' in' : ''}`}>
           {services.map((s) => (
             <div className="service-card" key={s.title}>
               {s.icon}
@@ -308,7 +312,7 @@ export default function Home() {
           <p className="eyebrow">Package builder</p>
           <h2>Pick what you need. Watch the number move.</h2>
         </div>
-        <div ref={estimatorReveal.ref} className={`estimator ${estimatorReveal.className}`}>
+        <div ref={estimatorRef} className={`estimator reveal${estimatorVisible ? ' in' : ''}`}>
           <div>
             <div className="estimator-group">
               <span>Website</span>
@@ -408,7 +412,7 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <div ref={workReveal.ref} className={`portfolio-grid ${workReveal.className}`}>
+        <div ref={workRef} className={`portfolio-grid reveal${workVisible ? ' in' : ''}`}>
           {portfolio.map((p) => (
             <div
               key={p.title}
@@ -430,7 +434,7 @@ export default function Home() {
       </section>
 
       <section className="wrap" id="book">
-        <div ref={bookingReveal.ref} className={`booking ${bookingReveal.className}`}>
+        <div ref={bookingRef} className={`booking reveal${bookingVisible ? ' in' : ''}`}>
           <div className="wrap-inner">
             <div>
               <p className="eyebrow" style={{ color: 'var(--support)' }}>

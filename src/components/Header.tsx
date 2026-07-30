@@ -10,7 +10,7 @@ export default function Header(props: HeaderProps) {
   return (
     <header>
       <LogoMark />
-      <span className="wordmark" style={{ fontSize: 19 }}>
+      <span className="wordmark">
         carry<b>ad</b>
         <span className="dot">.</span>
       </span>

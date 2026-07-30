@@ -123,30 +123,32 @@ export default function Admin() {
                 ))}
               </div>
             </div>
-            <table className="crm-table">
-              <thead>
-                <tr>
-                  <th>Business</th>
-                  <th>Industry</th>
-                  <th>Status</th>
-                  <th>Services</th>
-                  <th>Since</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clients.map((c) => (
-                  <tr key={c.name} className={filter !== 'all' && filter !== c.industry ? 'hide' : ''}>
-                    <td className="client-name">{c.name}</td>
-                    <td className="client-industry">{c.industry}</td>
-                    <td>
-                      <span className={`status-badge ${c.status}`}>{statusLabel[c.status]}</span>
-                    </td>
-                    <td>{c.services}</td>
-                    <td>{c.since}</td>
+            <div className="table-scroll">
+              <table className="crm-table">
+                <thead>
+                  <tr>
+                    <th>Business</th>
+                    <th>Industry</th>
+                    <th>Status</th>
+                    <th>Services</th>
+                    <th>Since</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {clients.map((c) => (
+                    <tr key={c.name} className={filter !== 'all' && filter !== c.industry ? 'hide' : ''}>
+                      <td className="client-name">{c.name}</td>
+                      <td className="client-industry">{c.industry}</td>
+                      <td>
+                        <span className={`status-badge ${c.status}`}>{statusLabel[c.status]}</span>
+                      </td>
+                      <td>{c.services}</td>
+                      <td>{c.since}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section id="pipeline" className="panel">
