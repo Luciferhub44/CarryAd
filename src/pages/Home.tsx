@@ -135,6 +135,13 @@ const portfolio: {
   },
 ]
 
+const industryFilters: { id: Industry; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'food', label: 'Food & Beverage' },
+  { id: 'retail', label: 'Retail' },
+  { id: 'services', label: 'Services' },
+]
+
 const reelTiers = [
   { id: 'none', label: 'None', price: 0 },
   { id: '4', label: '4 reels/mo', price: 450 },
@@ -197,12 +204,6 @@ export default function Home() {
 
   // ---- portfolio filter ----
   const [industry, setIndustry] = useState<Industry>('all')
-  const filters: { id: Industry; label: string }[] = [
-    { id: 'all', label: 'All' },
-    { id: 'food', label: 'Food & Beverage' },
-    { id: 'retail', label: 'Retail' },
-    { id: 'services', label: 'Services' },
-  ]
 
   // ---- booking form ----
   const [sent, setSent] = useState(false)
@@ -402,7 +403,7 @@ export default function Home() {
           <h2>Real corners, carried further.</h2>
         </div>
         <div className="filter-row reveal in">
-          {filters.map((f) => (
+          {industryFilters.map((f) => (
             <button
               key={f.id}
               className={`filter-btn ${industry === f.id ? 'active' : ''}`}

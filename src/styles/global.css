@@ -59,7 +59,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .ink-link svg{position:absolute;left:0;right:0;bottom:-2px;width:100%;height:8px;color:var(--accent);
   opacity:0;transform:scaleX(.3);transform-origin:left;transition:all .35s var(--press)}
 .ink-link:hover svg, .ink-link:focus-visible svg{opacity:1;transform:scaleX(1)}
-.ink-link.current svg{opacity:1;transform:scaleX(1)}
 
 .stamp-btn{background:var(--accent);color:var(--paper);border:none;border-radius:999px;
   padding:13px 22px;font-family:var(--font-display);font-weight:700;font-size:var(--text-sm);cursor:pointer;

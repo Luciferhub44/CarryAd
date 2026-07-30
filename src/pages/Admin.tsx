@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type { DragEvent } from 'react'
 import Header from '../components/Header'
 
@@ -28,6 +28,8 @@ const statusLabel: Record<ClientStatus, string> = {
   lead: 'Lead',
 }
 
+const industries: Industry[] = ['Cafe', 'Restaurant', 'Retail', 'Services']
+
 const templates = [
   {
     name: 'Seasonal menu launch',
@@ -47,7 +49,6 @@ export default function Admin() {
   const [filter, setFilter] = useState<'all' | Industry>('all')
   const [queue, setQueue] = useState<File[]>([])
   const [dragging, setDragging] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const addFiles = (files: FileList | null) => {
     if (!files) return
@@ -59,8 +60,6 @@ export default function Admin() {
     setDragging(false)
     addFiles(e.dataTransfer.files)
   }
-
-  const industries: Industry[] = ['Cafe', 'Restaurant', 'Retail', 'Services']
 
   return (
     <>
@@ -179,7 +178,6 @@ export default function Admin() {
               <label className="stamp-btn small ghost" style={{ display: 'inline-block', marginTop: 10, cursor: 'pointer' }}>
                 Choose files
                 <input
-                  ref={fileInputRef}
                   type="file"
                   multiple
                   style={{ display: 'none' }}
