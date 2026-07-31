@@ -1,50 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { ReactNode, RefObject } from 'react'
+import type { RefObject } from 'react'
 import Header from '../components/Header'
 import InkLink from '../components/InkLink'
 import useReveal from '../hooks/useReveal'
 import useParallax from '../hooks/useParallax'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
-const services: { icon: ReactNode; title: string; body: string }[] = [
+const services: { image: string; title: string; body: string }[] = [
   {
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-        <circle cx="24" cy="24" r="16" />
-        <path d="M24 14v10l7 5" />
-      </svg>
-    ),
+    image: '/media/service-branding.jpg',
     title: 'Brand identity',
     body: 'Logo suites, typography, color, menu design and packaging guidelines built around what already makes the place recognizable.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-        <rect x="8" y="14" width="32" height="22" rx="3" />
-        <circle cx="24" cy="25" r="6" />
-        <path d="M18 14l2-4h8l2 4" />
-      </svg>
-    ),
+    image: '/media/service-photo.jpg',
     title: 'Photography & media',
     body: "Dish and beverage shoots, interior atmosphere reels, staff spotlights: the visual proof that gets screenshotted and shared.",
   },
   {
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-        <rect x="6" y="10" width="36" height="24" rx="3" />
-        <path d="M6 18h36M16 34v6M32 34v6M14 40h20" />
-      </svg>
-    ),
+    image: '/media/service-web.jpg',
     title: 'Web development',
     body: 'Fast, mobile-first web pages, digital QR menus and reservation links built to convert local search traffic, not just look good.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-        <path d="M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36z" />
-        <path d="M6 24h36M24 6c5 5 8 11 8 18s-3 13-8 18c-5-5-8-11-8-18s3-13 8-18z" />
-      </svg>
-    ),
+    image: '/media/service-seo.jpg',
     title: 'Social & local SEO',
     body: 'Monthly Instagram and TikTok management, Google Maps ranking, and search optimization for the questions people actually ask.',
   },
@@ -308,7 +287,7 @@ export default function Home() {
         <div ref={servicesRef} className={`services-grid reveal${servicesVisible ? ' in' : ''}`}>
           {services.map((s) => (
             <div className="service-card" key={s.title}>
-              {s.icon}
+              <img className="service-art" src={s.image} alt="" loading="lazy" />
               <h3>{s.title}</h3>
               <p>{s.body}</p>
             </div>
