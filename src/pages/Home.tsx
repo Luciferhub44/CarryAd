@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { ReactNode } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import Header from '../components/Header'
 import InkLink from '../components/InkLink'
 import useReveal from '../hooks/useReveal'
+import useParallax from '../hooks/useParallax'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
 const services: { icon: ReactNode; title: string; body: string }[] = [
   {
@@ -53,8 +55,7 @@ type Industry = 'all' | 'food' | 'retail' | 'services'
 const portfolio: {
   industry: Exclude<Industry, 'all'>
   gradient: string
-  stroke: string
-  icon: ReactNode
+  image: string
   tag: string
   title: string
   body: string
@@ -62,8 +63,7 @@ const portfolio: {
   {
     industry: 'food',
     gradient: 'linear-gradient(135deg,#B5301F,#D96A4A)',
-    stroke: '#F1EAD9',
-    icon: <path d="M14 8v14a6 6 0 0012 0V8M20 8v14M14 8v6M8 22v18M8 22c0-4 3-6 6-6" />,
+    image: '/media/portfolio-coffee.jpg',
     tag: 'Food & Beverage',
     title: 'Meridian Coffee Co.',
     body: '+180% Maps views in 90 days from a brand refresh and menu photography.',
@@ -71,13 +71,7 @@ const portfolio: {
   {
     industry: 'retail',
     gradient: 'linear-gradient(135deg,#96587B,#BC7FA1)',
-    stroke: '#F3EBE0',
-    icon: (
-      <>
-        <path d="M10 16l4-8h20l4 8M8 16h32v22a2 2 0 01-2 2H10a2 2 0 01-2-2V16z" />
-        <path d="M18 16a6 6 0 0012 0" />
-      </>
-    ),
+    image: '/media/portfolio-boutique.jpg',
     tag: 'Retail',
     title: 'Sable & Thread',
     body: 'Full site rebuild plus a QR lookbook and seasonal launch templates.',
@@ -85,13 +79,7 @@ const portfolio: {
   {
     industry: 'services',
     gradient: 'linear-gradient(135deg,#DA8A24,#E89B3E)',
-    stroke: '#F6F1E4',
-    icon: (
-      <>
-        <circle cx="24" cy="16" r="7" />
-        <path d="M10 40c0-8 6-13 14-13s14 5 14 13" />
-      </>
-    ),
+    image: '/media/portfolio-dental.jpg',
     tag: 'Services',
     title: 'Birchwood Dental',
     body: 'Local SEO overhaul and monthly reels for a five-chair practice.',
@@ -99,13 +87,7 @@ const portfolio: {
   {
     industry: 'food',
     gradient: 'linear-gradient(135deg,#C9A22E,#E5C967)',
-    stroke: '#5A403C',
-    icon: (
-      <>
-        <path d="M8 20h32l-3 18H11L8 20z" />
-        <path d="M14 20a10 10 0 0120 0" />
-      </>
-    ),
+    image: '/media/portfolio-restaurant.jpg',
     tag: 'Food & Beverage',
     title: 'Olive & Anchor',
     body: 'Reservation-ready site, dish reels, and a full menu QR system.',
@@ -113,13 +95,7 @@ const portfolio: {
   {
     industry: 'retail',
     gradient: 'linear-gradient(135deg,#B06A45,#C87F56)',
-    stroke: '#FAEDF4',
-    icon: (
-      <>
-        <rect x="10" y="12" width="28" height="24" rx="2" />
-        <path d="M10 20h28M18 12v24" />
-      </>
-    ),
+    image: '/media/portfolio-bicycles.jpg',
     tag: 'Retail',
     title: 'Northline Bicycles',
     body: 'Brand identity, workshop photography, and an Instagram content engine.',
@@ -127,8 +103,7 @@ const portfolio: {
   {
     industry: 'services',
     gradient: 'linear-gradient(135deg,#9CBCA4,#DA8A24)',
-    stroke: '#6E4530',
-    icon: <path d="M24 6l4 8 9 1-6.5 6.5 1.5 9L24 26l-8 4.5 1.5-9L10 15l9-1z" />,
+    image: '/media/portfolio-home.jpg',
     tag: 'Services',
     title: 'Hearth Home Studio',
     body: 'A before/after portfolio site and Google Business optimization.',
@@ -164,6 +139,12 @@ export default function Home() {
   const workVisible = useReveal(workRef)
   const bookingRef = useRef<HTMLDivElement>(null)
   const bookingVisible = useReveal(bookingRef)
+
+  const cinematicRef = useRef<HTMLDivElement>(null)
+  const cinematicVisible = useReveal(cinematicRef)
+  const cinematicBgRef = useRef<HTMLVideoElement | HTMLImageElement>(null)
+  useParallax(cinematicRef, cinematicBgRef, 0.15)
+  const reducedMotion = usePrefersReducedMotion()
 
   // ---- estimator ----
   const [website, setWebsite] = useState(false)
@@ -289,6 +270,33 @@ export default function Home() {
             Average client tenure
             <b>14 mo.</b>
           </div>
+        </div>
+      </div>
+
+      <div ref={cinematicRef} className="cinematic">
+        {!reducedMotion && cinematicVisible ? (
+          <video
+            ref={cinematicBgRef as RefObject<HTMLVideoElement>}
+            className="cinematic-bg"
+            src="/media/hero-cafe.mp4"
+            poster="/media/portfolio-coffee.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        ) : (
+          <img
+            ref={cinematicBgRef as RefObject<HTMLImageElement>}
+            className="cinematic-bg"
+            src="/media/portfolio-coffee.jpg"
+            alt=""
+          />
+        )}
+        <div className="cinematic-overlay" />
+        <div className="cinematic-content">
+          <p className="eyebrow">Every corner has one</p>
+          <p className="slogan">&ldquo;the recipe, the ritual, the corner it&rsquo;s known for&rdquo;</p>
         </div>
       </div>
 
@@ -420,9 +428,7 @@ export default function Home() {
               className={`p-card ${industry !== 'all' && industry !== p.industry ? 'hide' : ''}`}
             >
               <div className="p-art" style={{ background: p.gradient }}>
-                <svg viewBox="0 0 48 48" fill="none" stroke={p.stroke} strokeWidth="2.5" strokeLinecap="round">
-                  {p.icon}
-                </svg>
+                <img src={p.image} alt={p.title} loading="lazy" />
               </div>
               <div className="p-body">
                 <p className="p-tag">{p.tag}</p>
