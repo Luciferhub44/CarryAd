@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import type { RefObject } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import Header from '../components/Header'
 import InkLink from '../components/InkLink'
 import useReveal from '../hooks/useReveal'
@@ -103,12 +103,58 @@ const reelTiers = [
   { id: '12', label: '12 reels/mo', price: 1100 },
 ] as const
 
+const socialLinks: { name: string; href: string; icon: ReactNode }[] = [
+  {
+    name: 'Instagram',
+    href: 'https://instagram.com/carryad.agency',
+    icon: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+      </>
+    ),
+  },
+  {
+    name: 'X',
+    href: 'https://x.com/carryad.agency',
+    icon: <path d="M4.5 4.5l15 15M19.5 4.5l-15 15" />,
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/carryad.agency',
+    icon: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="3" />
+        <circle cx="8" cy="8.3" r="1" fill="currentColor" stroke="none" />
+        <path d="M8 11v6" />
+        <path d="M13 17v-3.5a2 2 0 0 1 4 0V17" />
+        <path d="M13 11v6" />
+      </>
+    ),
+  },
+  {
+    name: 'Facebook',
+    href: 'https://facebook.com/carryad.agency',
+    icon: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <path d="M14 8.5h-1.3a1.7 1.7 0 0 0-1.7 1.7V12H8.5v3H11v6h3v-6h2.2l.4-3H14v-1.3a.4.4 0 0 1 .4-.4H16.5V8.5H14z" fill="currentColor" stroke="none" />
+      </>
+    ),
+  },
+  {
+    name: 'Threads',
+    href: 'https://www.threads.net/@carryad.agency',
+    icon: (
+      <path d="M12 3c-5 0-7 3.3-7 7.7v2.6C5 17.7 7 21 12 21s7-3.3 7-7.7c0-2.1-1.1-3.6-3.1-3.6-1.6 0-2.6 1-2.6 2.3 0 1.1.8 1.9 2.1 1.9" />
+    ),
+  },
+]
+
 export default function Home() {
-  const [heroPlay, setHeroPlay] = useState(false)
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setHeroPlay(true))
-    return () => cancelAnimationFrame(raf)
-  }, [])
+  const heroArtRef = useRef<HTMLDivElement>(null)
+  const heroArtVisible = useReveal(heroArtRef)
 
   const servicesRef = useRef<HTMLDivElement>(null)
   const servicesVisible = useReveal(servicesRef)
@@ -198,36 +244,10 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-art">
-          <div className={heroPlay ? 'play' : ''}>
-            <svg viewBox="0 0 220 200" aria-label="carryad spiral mark">
-              <path
-                className="cv-ink"
-                pathLength={100}
-                d="M 192 98 C 196 44 148 16 104 22 C 58 28 30 66 38 110 C 46 152 88 178 128 168 C 164 159 184 124 172 92 C 161 63 124 52 98 68 C 74 82 70 114 88 130 C 103 143 128 138 134 120"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <g className="cv-clean">
-                <path
-                  d="M 190 100 A 70 70 0 0 1 50 100 A 55 55 0 0 1 160 100"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="15"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M 160 100 C 162 64 130 48 102 58 C 76 67 68 96 82 116 C 94 133 122 134 132 118 C 140 105 132 90 118 90 C 108 90 104 100 110 106"
-                  fill="none"
-                  stroke="var(--accent)"
-                  strokeWidth="9"
-                  strokeLinecap="round"
-                />
-              </g>
-            </svg>
+          <div ref={heroArtRef} className={`reveal${heroArtVisible ? ' in' : ''}`}>
+            <img src="/media/mascot-climbing.png" alt="Illustration of the carryad mascot climbing a staircase, carrying a poster, a tote bag of brushes, a framed print, and a coffee" />
           </div>
-          <p className="hero-note">&ldquo;ring by ring, the story carries out&rdquo;</p>
+          <p className="hero-note">&ldquo;stair by stair, the story carries up&rdquo;</p>
         </div>
       </section>
 
@@ -431,6 +451,12 @@ export default function Home() {
                 A 20-minute discovery call. No deck, no pressure, just a look at what&rsquo;s already working
                 and what carrying it further could look like.
               </p>
+              <p>
+                Prefer to write first? Reach us at{' '}
+                <InkLink to="mailto:info@carryad.com" style={{ color: 'var(--accent-dark)' }}>
+                  info@carryad.com
+                </InkLink>
+              </p>
               <p className="slogan" style={{ marginTop: 20, fontSize: 17 }}>
                 &ldquo;your story, carried everywhere&rdquo;
               </p>
@@ -445,6 +471,7 @@ export default function Home() {
               <input type="text" placeholder="Business name" required />
               <input type="text" placeholder="Your name" required />
               <input type="email" placeholder="Email" required />
+              <input type="tel" placeholder="Phone number" required />
               <div>
                 <p className="form-note" style={{ marginBottom: 8 }}>
                   Interested in
@@ -487,6 +514,15 @@ export default function Home() {
             <InkLink to="/admin" style={{ color: 'var(--muted)' }}>
               agency access
             </InkLink>
+          </div>
+          <div className="foot-social">
+            {socialLinks.map((s) => (
+              <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`carryad.agency on ${s.name}`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  {s.icon}
+                </svg>
+              </a>
+            ))}
           </div>
           <svg className="foot-loader" viewBox="0 0 220 200" aria-hidden="true">
             <path

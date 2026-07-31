@@ -26,19 +26,19 @@ export default function InkLink({
 }) {
   const classes = `ink-link ${className}`.trim()
 
-  if (to.startsWith('#')) {
+  if (to.startsWith('/')) {
     return (
-      <a href={to} className={classes} style={style}>
+      <Link to={to} className={classes} style={style}>
         {children}
         {underline}
-      </a>
+      </Link>
     )
   }
 
   return (
-    <Link to={to} className={classes} style={style}>
+    <a href={to} className={classes} style={style}>
       {children}
       {underline}
-    </Link>
+    </a>
   )
 }

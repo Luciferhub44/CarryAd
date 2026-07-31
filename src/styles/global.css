@@ -41,15 +41,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    MOTION
    ============================================================ */
 @media (prefers-reduced-motion: no-preference){
-  .play .cv-ink{stroke-dasharray:100;stroke-dashoffset:100;animation:cv-draw 2.6s cubic-bezier(.4,0,.3,1) forwards}
-  @keyframes cv-draw{0%{stroke-dashoffset:100}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.15}}
-  .play .cv-clean{opacity:0;animation:cv-clean .9s ease 2.2s forwards}
-  @keyframes cv-clean{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s var(--press)}
   .reveal.in{opacity:1;transform:translateY(0)}
-}
-@media (prefers-reduced-motion: reduce){
-  .play .cv-ink{display:none}
 }
 
 .ink-loader{stroke-dasharray:100;animation:ink-load 2.8s linear infinite}
@@ -107,9 +100,9 @@ nav .portal-btn:hover{transform:scale(.97)}
 .hero h1 em{font-style:italic;color:var(--accent);font-family:var(--font-voice);font-weight:400}
 .hero p.lede{margin:20px 0 26px;color:var(--muted);max-width:420px;font-size:var(--text-lg)}
 .hero .cta-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.hero-art{position:relative;order:-1;max-width:220px;margin:0 auto}
-.hero-art svg{width:100%;margin-inline:auto}
-.hero-note{font-family:var(--font-voice);font-style:italic;font-size:var(--text-sm);color:var(--muted);text-align:center;margin-top:14px}
+.hero-art{position:relative;order:-1;max-width:260px;margin:0 auto;display:flex;justify-content:center}
+.hero-art img{width:100%;height:auto;filter:drop-shadow(0 18px 24px rgba(43,38,32,.16))}
+.hero-note{font-family:var(--font-voice);font-style:italic;font-size:var(--text-sm);color:var(--muted);text-align:center;margin-top:18px}
 .trust-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
 .trust-strip .wrap{display:flex;gap:28px;flex-wrap:wrap;row-gap:16px}
 .trust-item{font-family:var(--font-display);font-size:var(--text-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex:1 1 40%}
@@ -121,7 +114,7 @@ nav .portal-btn:hover{transform:scale(.97)}
 }
 @media (min-width:860px){
   .hero{grid-template-columns:1.15fr 1fr;gap:56px;padding:76px 40px 0}
-  .hero-art{order:0;max-width:340px;margin:0}
+  .hero-art{order:0;max-width:380px;margin:0}
 }
 
 /* ============================================================
@@ -233,14 +226,15 @@ nav .portal-btn:hover{transform:scale(.97)}
 .booking p{color:#D8CFC0;margin-top:16px;max-width:400px}
 .booking .slogan{color:var(--accent-dark)}
 .form-grid{display:grid;gap:14px}
-.form-grid input, .form-grid select{
+.form-grid input:not([type="checkbox"]), .form-grid select{
   background:#3A342C;border:1px solid #52493C;color:var(--paper);border-radius:10px;
   padding:13px 16px;font-family:var(--font-body);font-size:var(--text-sm);width:100%;min-height:44px
 }
 .form-grid input::placeholder{color:#9C9184}
 .check-row{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
 .check-row label{display:flex;align-items:center;gap:8px;font-size:13px;background:#3A342C;
-  border:1px solid #52493C;padding:8px 14px;border-radius:999px;cursor:pointer}
+  border:1px solid #52493C;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.check-row input[type="checkbox"]{width:16px;height:16px;flex-shrink:0;margin:0;accent-color:var(--accent)}
 .form-note{font-size:12px;color:#9C9184;margin-top:6px}
 @media (min-width:860px){
   .booking{padding:64px;border-radius:28px}
@@ -384,6 +378,10 @@ nav .portal-btn:hover{transform:scale(.97)}
 footer{border-top:1px solid var(--line);padding:36px 0}
 footer .wrap{display:flex;flex-direction:column;align-items:flex-start;gap:20px}
 .foot-links{display:flex;gap:20px;flex-wrap:wrap}
+.foot-social{display:flex;gap:16px;flex-wrap:wrap}
+.foot-social a{color:var(--muted);transition:color .18s var(--press)}
+.foot-social a:hover, .foot-social a:focus-visible{color:var(--accent)}
+.foot-social svg{width:19px;height:19px}
 .foot-loader{width:26px;color:var(--muted)}
 @media (min-width:600px){
   footer{padding:48px 0}
