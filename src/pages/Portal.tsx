@@ -82,7 +82,7 @@ export default function Portal() {
 
   return (
     <>
-      <Header variant="app" label="Client portal" />
+      <Header label="Client portal" />
 
       <div className="dash-layout">
         <aside className="dash-side">

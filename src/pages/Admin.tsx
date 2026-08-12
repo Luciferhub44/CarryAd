@@ -63,7 +63,7 @@ export default function Admin() {
 
   return (
     <>
-      <Header variant="app" label="Agency hub" />
+      <Header label="Agency hub" />
 
       <div className="dash-layout">
         <aside className="dash-side">
