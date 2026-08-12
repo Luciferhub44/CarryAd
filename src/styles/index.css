@@ -1,6 +1,10 @@
-/* Utilities + theme only — no Preflight. Portal/Admin still run on the
-   original plain-CSS system (src/styles/global.css) and its own reset;
-   pulling in Preflight here would silently restyle those pages too. */
+/* Single CSS entry point. Explicit layer order so Tailwind utilities always
+   win over the legacy plain-CSS system's broad resets (*{margin:0}, body{...},
+   etc.) — without this, unlayered CSS beats layered CSS regardless of
+   specificity, which was silently zeroing out every spacing utility. */
+@layer legacy, theme, utilities;
+
+@import './global.css' layer(legacy);
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
 
