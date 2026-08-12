@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Show, SignInButton, UserButton } from '@clerk/react'
 import LogoMark from './LogoMark'
 import InkLink from './InkLink'
 
@@ -26,16 +27,22 @@ export default function Header(props: HeaderProps) {
               <InkLink to="#work">work</InkLink>
               <InkLink to="#book">contact</InkLink>
             </div>
-            <Link className="portal-btn" to="/portal">
-              Portal login
-            </Link>
+            <Show when="signed-out">
+              <SignInButton mode="modal">
+                <button className="portal-btn">Portal login</button>
+              </SignInButton>
+            </Show>
+            <Show when="signed-in">
+              <Link className="portal-btn" to="/portal">
+                Go to portal
+              </Link>
+              <UserButton />
+            </Show>
           </>
         ) : (
           <>
             <InkLink to="/">Back to site</InkLink>
-            <Link className="portal-btn" to="/">
-              Log out
-            </Link>
+            <UserButton />
           </>
         )}
       </nav>
